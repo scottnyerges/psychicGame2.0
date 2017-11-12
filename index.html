@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <title>The Psychic Game!</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <!-- local stylesheet -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <!-- google fonts link -->
+        <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+        
+    </head>
+    <body>
+        <!-- this is the header -->
+        <header>
+            <h2>Play the psychic game</h2>
+            <p><em>You have 9 chances to guess the correct key...</em></p>
+        </header>
+        <!-- this is the main body of the grid -->
+        <div id='main'>
+            <article>
+                <!-- this is code for the game -->
+                <div id="game">
+                    <p>Pick a key, any key...</p>
+                </div>
+            </article>
+            <!-- this is the aside column -->
+            <aside>
+                <img src="https://i.pinimg.com/originals/df/a7/77/dfa77702c0bba8dab09df8dd830f5638.jpg">
+            </aside>
+            <nav>
+                <img src="https://i.pinimg.com/originals/df/a7/77/dfa77702c0bba8dab09df8dd830f5638.jpg">
+            </nav>
+            
+        </div>
+    <footer>footer</footer>
+    <!--  this is script to run the game; it should go in its own file-->
+    <script type="text/javascript">
+    
+    // this variable defines the computer's 10 letter choices
+    var letters = ["a", "c", "f", "h", "k", "m", "o", "r", "x", "z"];
+    // this variable sets the computerChoice at null
+    var computerChoice = null;
+    // this variable sets a starting value for the user's total number of correct guesses
+    var wins = 0;
+    // this variable sets a starting value for the user's total number of losses after making 9 incorrrect guesses
+    var losses = 0;
+    // this variable sets a starting value for the user's guesses so far
+    var guessesSoFar = [];
+    // this variable sets a starting value for the user's guesses remaining
+    var guessesLeft = 9;
+    // this defines the computer's random pick based on the letters array
+    var index = letters[Math.floor(Math.random() * letters.length)];
+    var computerChoice = letters[index];
+    console.log(index);
+    // This function is run whenever the user presses a key to start or continue a game.
+    document.onkeyup = function(event) {
+    // This variable determines which key was pressed.
+    var userGuess = event.key;
+    //if user gets it right
+    if (userGuess === index) {
+    console.log("wins");
+    wins++;
+    guessesSoFar = [];
+    guessesLeft = 9;
+    index = letters[Math.floor(Math.random() * letters.length)];
+    //if user gets it wrong
+    } else if (userGuess !== index) {
+    console.log("losses");
+    guessesLeft--;
+    // if user is out of guesses
+    if (guessesLeft == 0) {
+    console.log("You lose")
+    losses++;
+    guessesSoFar = [];
+    guessesLeft = 9;
+    index = letters[Math.floor(Math.random() * letters.length)];
+    }
+    }
+    // computer takes the user's response and "pushes" (or adds) the variable to the end of the guessesSoFar array.
+    guessesSoFar.push(userGuess);
+    console.log(guessesSoFar);
+    
+    // This variable holds our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses.
+    var html =
+    "<p>Guesses left: " + guessesLeft + "</p>" +
+    "<p>Guesses so far: " + guessesSoFar + "</p>" +
+    "<p>Wins: " + wins + "</p>" +
+    "<p>Losses: " + losses + "</p>";
+    // This sets the inner HTML contents of the #game div to our html string
+    document.querySelector("#game").innerHTML = html;
+    };
+    </script>
+    <!-- this is the end of the code -->
+</body>
+</html>
